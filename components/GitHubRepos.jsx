@@ -198,10 +198,10 @@ export default function GitHubRepos({ username }) {
                 href={repo.html_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 8 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: i * 0.06 }}
+                transition={{ duration: 0.25, delay: i * 0.03 }}
                 className="block rounded-md border p-4 transition-all duration-200"
                 style={{
                   borderColor: "#21262d",

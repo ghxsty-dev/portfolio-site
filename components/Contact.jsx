@@ -15,12 +15,12 @@ const socialLinks = [
 
 const container = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
+  visible: { transition: { staggerChildren: 0.04 } },
 }
 
 const item = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
 }
 
 export default function Contact({ profile }) {
@@ -53,7 +53,7 @@ export default function Contact({ profile }) {
                 <motion.a
                   key={link.key}
                   variants={item}
-                  whileHover={{ scale: 1.03 }}
+                  whileHover={{ scale: 1.015 }}
                   href={href}
                   target={isExternal ? "_blank" : undefined}
                   rel={isExternal ? "noopener noreferrer" : undefined}

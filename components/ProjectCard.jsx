@@ -4,11 +4,11 @@ import { HiExternalLink, HiCode } from "react-icons/hi"
 export default function ProjectCard({ project, index }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50, rotateX: -10 }}
+      initial={{ opacity: 0, y: 15, rotateX: -5 }}
       whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-      whileHover={{ y: -8, transition: { duration: 0.2 } }}
+      transition={{ duration: 0.35, delay: index * 0.05, ease: [0.25, 0.46, 0.45, 0.94] }}
+      whileHover={{ y: -4, transition: { duration: 0.2 } }}
       className="card group cursor-pointer perspective-1000 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
     >
       <div className="relative h-48 mb-4 rounded-lg overflow-hidden bg-gradient-to-br from-accent/10 to-accent/5 dark:from-accent/[0.08] dark:to-accent/[0.02]">
