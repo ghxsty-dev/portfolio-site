@@ -38,8 +38,8 @@ export default function SkyBlue() {
               Tasarım Hizmetleri
             </p>
             <p className="text-white/80 leading-relaxed mb-6">
-              Kurumsal tasarım, UI/UX tasarım ve web geliştirme hizmetleri.
-              Modern ve profesyonel çözümlerle markanızı bir adım öne taşıyoruz.
+              Kurumsal tasarımlar, maskot logolar, konu tasarımları ve daha fazlası SkyBlue'da!
+              Siz de en modern ve güncel tasarımlar, Discord botları ve daha fazlası için Discord'umuza katılın.
             </p>
             <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
               <span className="px-4 py-2 rounded-full bg-white/20 text-white text-sm font-medium backdrop-blur-sm">
@@ -49,7 +49,7 @@ export default function SkyBlue() {
                 UI/UX Tasarım
               </span>
               <span className="px-4 py-2 rounded-full bg-white/20 text-white text-sm font-medium backdrop-blur-sm">
-                Web Geliştirme
+                Discord Bot Geliştirme
               </span>
             </div>
           </motion.div>
