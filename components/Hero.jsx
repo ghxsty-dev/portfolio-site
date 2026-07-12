@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { HiArrowDown } from "react-icons/hi"
 import { AnimeSilhouette, FloatingParticles, SakuraPetals } from "./AnimeDecoration"
 
@@ -19,8 +19,32 @@ const itemVariants = {
   },
 }
 
+const fastfetch = [
+  "                 -`                     ghxsty@github",
+  "                .o+`                    -------------------------",
+  "               `ooo/                    Name      : Kıvanç Toprak",
+  "              `+oooo:                   Alias     : Ghxsty",
+  "             `+oooooo:                  Brand     : SkyBlue",
+  "             -+oooooo+:                 Role      : Developer, Designer",
+  "           `/:-:++oooo+:                Focus     : Discord Systems, Logo, Banner",
+  "          `/++++/+++++++:               Stack     : JS • TS • Node.js",
+  "         `/++++++++++++++:              Frontend  : HTML • CSS",
+  "        `/+++ooooooooooooo/`            Database  : MongoDB",
+  "       ./ooosssso++osssssso+`           Website   : ghxsty.lol",
+  "      .oossssso-````/ossssss+`          Status    : Online on Discord (Add me: ghxsty.lol)",
+  "     -osssssso.      :ssssssso.",
+  "    :osssssss/        osssso+++.",
+  "   /ossssssss/        +ssssooo/-",
+  " `/ossssso+/:-        -:/+osssso+-",
+  "`+sso+:-`                 `.-/+oso:",
+  "`++:.                           `-+/+",
+]
+
 export default function Hero({ profile }) {
   const [titleIndex, setTitleIndex] = useState(0)
+  const [termPhase, setTermPhase] = useState("idle")
+  const [termCmd, setTermCmd] = useState("")
+  const [termLines, setTermLines] = useState(0)
   const titles = ["Full Stack Developer", "UI/UX Designer", "Creative Developer"]
 
   useEffect(() => {
@@ -28,6 +52,28 @@ export default function Hero({ profile }) {
       setTitleIndex((prev) => (prev + 1) % titles.length)
     }, 3000)
     return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    const t1 = setTimeout(() => setTermPhase("typing"), 600)
+    let i = 0
+    const t2 = setInterval(() => {
+      i++
+      setTermCmd("fastfetch".slice(0, i))
+      if (i >= 9) {
+        clearInterval(t2)
+        setTimeout(() => {
+          setTermPhase("output")
+          let li = 0
+          const t3 = setInterval(() => {
+            li++
+            setTermLines(li)
+            if (li >= fastfetch.length) clearInterval(t3)
+          }, 40)
+        }, 400)
+      }
+    }, 80)
+    return () => { clearTimeout(t1); clearInterval(t2) }
   }, [])
 
   return (
@@ -105,6 +151,59 @@ export default function Hero({ profile }) {
             >
               İletişime Geç
             </motion.a>
+          </motion.div>
+
+          {/* Terminal */}
+          <motion.div
+            variants={itemVariants}
+            className="mt-8 rounded-lg overflow-hidden shadow-2xl max-w-[640px]"
+            style={{ background: "#1a1b26", border: "1px solid rgba(255,255,255,0.06)" }}
+          >
+            <div className="flex items-center justify-between px-3 py-2" style={{ background: "#2f3340", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+              <div className="flex items-center gap-2 text-[11px]" style={{ color: "#cdd6f4" }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a6adc8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="4 17 10 11 4 5" /><line x1="12" y1="19" x2="20" y2="19" />
+                </svg>
+                <span>ghxsty@github: ~</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#f38ba8" }} />
+                <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#fab387" }} />
+                <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#a6e3a1" }} />
+              </div>
+            </div>
+            <div className="p-3 sm:p-4" style={{ fontFamily: "'JetBrains Mono', 'Fira Code', monospace", fontSize: 12 }}>
+              <div className="flex items-center gap-0" style={{ color: "#cdd6f4" }}>
+                <span style={{ color: "#a6e3a1" }}>ghxsty@github</span>
+                <span style={{ color: "#89b4fa" }}>:</span>
+                <span style={{ color: "#f5c2e7" }}>~</span>
+                <span style={{ color: "#89b4fa" }}>$</span>
+                <span className="ml-1.5">{termCmd}</span>
+                {(termPhase === "typing" || (termPhase === "output" && termLines < fastfetch.length)) && (
+                  <motion.span animate={{ opacity: [1, 0] }} transition={{ repeat: Infinity, duration: 0.6 }}>▊</motion.span>
+                )}
+              </div>
+              <AnimatePresence>
+                {termPhase === "output" && (
+                  <motion.pre initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="leading-[1.4] whitespace-pre mt-1" style={{ color: "#a6e3a1" }}>
+                    {fastfetch.slice(0, termLines).map((line, i) => (
+                      <motion.div key={i} initial={{ opacity: 0, x: -2 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.1 }}>
+                        {line}
+                      </motion.div>
+                    ))}
+                    {termLines >= fastfetch.length && (
+                      <div className="flex items-center gap-0 mt-1.5">
+                        <span style={{ color: "#a6e3a1" }}>ghxsty@github</span>
+                        <span style={{ color: "#89b4fa" }}>:</span>
+                        <span style={{ color: "#f5c2e7" }}>~</span>
+                        <span style={{ color: "#89b4fa" }}>$</span>
+                        <motion.span className="ml-1.5" animate={{ opacity: [1, 0] }} transition={{ repeat: Infinity, duration: 0.8 }}>▊</motion.span>
+                      </div>
+                    )}
+                  </motion.pre>
+                )}
+              </AnimatePresence>
+            </div>
           </motion.div>
         </motion.div>
       </div>

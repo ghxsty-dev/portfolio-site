@@ -3,7 +3,6 @@ import About from "@/components/About"
 import SkyBlue from "@/components/SkyBlue"
 import GitHubRepos from "@/components/GitHubRepos"
 import Contact from "@/components/Contact"
-import Terminal from "@/components/Linux"
 
 import profile from "@/data/profile.json"
 import designs from "@/data/designs.json"
@@ -11,7 +10,6 @@ import designs from "@/data/designs.json"
 export default function Home() {
   return (
     <>
-      <Terminal />
       <Hero profile={profile} />
       <About profile={profile} designs={designs} />
       <SkyBlue />
