@@ -3,15 +3,15 @@
     "id": 1,
     "title": "İkon Paketleri",
     "description": "Çeşitli ikonları içeren bir paket.",
-    "image": "/images/designs/design1.jpg",
-    "tags": ["İkon", "Tasarım"],
+    "image": "/images/designs/design1.png",
+    "tags": ["Logo", "Kurumsal"],
     "link": null
   },
   {
     "id": 2,
-    "title": "Mangitto Instagram Tanıtım",
-    "description": "Mangitto için Instagram için yapılan tanıtım tasarımı.",
-    "image": "/images/designs/design2.jpg",
+    "title": "UI/UX Mobil Uygulama",
+    "description": "SaaS ürünü için mobil uygulama arayüz tasarımı.",
+    "image": "/images/designs/design2.png",
     "tags": ["Sosyal Medya", "Tasarım"],
     "link": null
   },
@@ -19,7 +19,7 @@
     "id": 3,
     "title": "Minecraft Banner",
     "description": "Aris Network için Minecraft Text banner",
-    "image": "/images/designs/design3.jpg",
+    "image": "/images/designs/design3.png",
     "tags": ["Minecraft", "Banner"],
     "link": null
   },
@@ -27,7 +27,7 @@
     "id": 4,
     "title": "Velo Hosting Kurumsal Tasarım",
     "description": "Velo Hosting için kurumsal tasarım.",
-    "image": "/images/designs/design4.jpg",
+    "image": "/images/designs/design4.png",
     "tags": ["Kurumsal", "Tasarım"],
     "link": null
   }

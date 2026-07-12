@@ -24,8 +24,15 @@ export default function Designs({ designs }) {
               whileHover={{ y: -4 }}
               className="card group overflow-hidden"
             >
-              <div className="relative h-52 mb-4 rounded-lg overflow-hidden bg-gradient-to-br from-accent/10 to-accent/5 dark:from-accent/[0.08] dark:to-accent/[0.02] flex items-center justify-center">
-                <HiPhotograph className="w-16 h-16 text-accent/30" />
+              <div className="relative h-52 mb-4 rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-900 flex items-center justify-center">
+                <img
+                  src={design.image}
+                  alt={design.title}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  onError={(e) => { e.target.style.display = "none"; e.target.nextSibling.style.display = "flex" }}
+                />
+                <HiPhotograph className="w-16 h-16 text-gray-400 dark:text-gray-600 hidden" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
                   {design.link && (
                     <a
