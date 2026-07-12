@@ -9,9 +9,9 @@ module.exports = {
     extend: {
       colors: {
         accent: {
-          DEFAULT: "#e11d48",
-          hover: "#be123c",
-          light: "#fb7185",
+          DEFAULT: "rgb(var(--color-accent) / <alpha-value>)",
+          hover: "rgb(var(--color-accent-hover) / <alpha-value>)",
+          light: "rgb(var(--color-accent-light) / <alpha-value>)",
         },
       },
       fontFamily: {
