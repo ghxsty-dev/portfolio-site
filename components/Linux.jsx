@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
 const fastfetch = [
@@ -22,72 +22,42 @@ const fastfetch = [
   "`++:.                           `-+/+",
 ]
 
-export default function Linux() {
+export default function Terminal() {
   const [phase, setPhase] = useState("idle")
   const [cmd, setCmd] = useState("")
   const [lines, setLines] = useState(0)
-  const timerRef = useRef(null)
 
-  const clearTimers = useCallback(() => {
-    timerRef.current?.forEach(clearTimeout)
-    timerRef.current = null
-  }, [])
-
-  const start = useCallback(() => {
-    if (phase !== "idle") return
-    setPhase("typing")
-
+  useEffect(() => {
+    const t1 = setTimeout(() => setPhase("typing"), 300)
     let i = 0
-    const t = setInterval(() => {
+    const t2 = setInterval(() => {
       i++
       setCmd("fastfetch".slice(0, i))
       if (i >= 9) {
-        clearInterval(t)
+        clearInterval(t2)
         setTimeout(() => {
           setPhase("output")
           let li = 0
-          const lt = setInterval(() => {
+          const t3 = setInterval(() => {
             li++
             setLines(li)
-            if (li >= fastfetch.length) clearInterval(lt)
+            if (li >= fastfetch.length) clearInterval(t3)
           }, 40)
         }, 400)
       }
     }, 80)
-  }, [phase])
-
-  const reset = useCallback(() => {
-    clearTimers()
-    setPhase("idle")
-    setCmd("")
-    setLines(0)
-  }, [clearTimers])
+    return () => { clearTimeout(t1); clearInterval(t2) }
+  }, [])
 
   return (
-    <section
-      id="linux"
-      className="relative overflow-hidden select-none"
-      style={{
-        background: "#1e1e2e",
-        minHeight: 580,
-        height: "100vh",
-        maxHeight: 700,
-      }}
-      onMouseEnter={start}
-      onMouseLeave={reset}
-    >
-      {/* Wallpaper */}
-      <div className="absolute inset-0 bg-cover bg-center opacity-30" style={{ backgroundImage: "url(/images/background.png)", backgroundSize: "cover" }} />
-      <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, #1e1e2e 0%, #2b2b3d 30%, #1a1a2e 60%, #0f0f1a 100%)", opacity: 0.8 }} />
-
-      {/* Terminal */}
-      <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+    <section className="py-12 sm:py-16 flex items-center justify-center" style={{ background: "#0d1117" }}>
+      <div className="w-full max-w-3xl mx-auto px-4">
         <motion.div
-          className="rounded-lg overflow-hidden shadow-2xl w-[75%] max-w-[820px]"
+          className="rounded-lg overflow-hidden shadow-2xl"
           style={{ background: "#1a1b26", border: "1px solid rgba(255,255,255,0.06)" }}
-          initial={{ opacity: 0.25, scale: 0.95 }}
-          animate={phase !== "idle" ? { opacity: 1, scale: 1 } : { opacity: 0.25, scale: 0.95 }}
-          transition={{ duration: 0.4 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
         >
           {/* Title Bar */}
           <div className="flex items-center justify-between px-4 py-2.5" style={{ background: "#2f3340", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
@@ -105,16 +75,16 @@ export default function Linux() {
           </div>
 
           {/* Body */}
-          <div className="p-4 sm:p-5 min-h-[220px]" style={{ fontFamily: "'JetBrains Mono', 'Fira Code', monospace", fontSize: 13 }}>
+          <div className="p-4 sm:p-5 min-h-[200px]" style={{ fontFamily: "'JetBrains Mono', 'Fira Code', monospace", fontSize: 13 }}>
             <div className="flex items-center gap-0 mb-2" style={{ color: "#cdd6f4" }}>
               <span style={{ color: "#a6e3a1" }}>ghxsty@github</span>
               <span style={{ color: "#89b4fa" }}>:</span>
               <span style={{ color: "#f5c2e7" }}>~</span>
               <span style={{ color: "#89b4fa" }}>$</span>
               <span className="ml-2">{cmd}</span>
-                {(phase === "typing" || (phase === "output" && lines < fastfetch.length)) && (
-                  <motion.span animate={{ opacity: [1, 0] }} transition={{ repeat: Infinity, duration: 0.6 }}>▊</motion.span>
-                )}
+              {(phase === "typing" || (phase === "output" && lines < fastfetch.length)) && (
+                <motion.span animate={{ opacity: [1, 0] }} transition={{ repeat: Infinity, duration: 0.6 }}>▊</motion.span>
+              )}
             </div>
 
             <AnimatePresence>
@@ -139,22 +109,6 @@ export default function Linux() {
             </AnimatePresence>
           </div>
         </motion.div>
-      </div>
-
-      {/* KDE Panel */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-1.5" style={{ background: "rgba(30,30,46,0.85)", backdropFilter: "blur(20px)", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-        <div className="flex items-center gap-1">
-          <button className="px-2.5 py-1 rounded-md transition-all" style={{ color: phase !== "idle" ? "#89b4fa" : "#cdd6f4", background: phase !== "idle" ? "rgba(137,180,250,0.15)" : "transparent" }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="4 17 10 11 4 5" /><line x1="12" y1="19" x2="20" y2="19" />
-            </svg>
-          </button>
-        </div>
-        <div className="flex items-center gap-3 text-xs" style={{ color: "#cdd6f4" }}>
-          <span className="opacity-60">🔊</span>
-          <span className="opacity-60">📶</span>
-          <span>{new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })}</span>
-        </div>
       </div>
     </section>
   )
