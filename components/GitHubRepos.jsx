@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import AnimatedSection from "./AnimatedSection"
-import SectionHeader from "./SectionHeader"
-import { HiStar, HiCode, HiExternalLink } from "react-icons/hi"
-import { GoRepoForked } from "react-icons/go"
+import { HiStar, HiCode } from "react-icons/hi"
+import { GoRepoForked, GoRepo } from "react-icons/go"
 
 export default function GitHubRepos({ username }) {
   const [repos, setRepos] = useState([])
@@ -28,78 +26,77 @@ export default function GitHubRepos({ username }) {
   }, [username])
 
   return (
-    <AnimatedSection id="github" className="py-24 bg-gray-50 dark:bg-[#080808]">
-      <div className="section-container">
-        <SectionHeader
-          title="GitHub Projelerim"
-          subtitle="GitHub'daki güncel açık kaynak projelerim"
-          jpText="GitHub"
-          side="left"
-        />
+    <section id="github" className="py-24" style={{ background: "#0d1117" }}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-3 mb-12">
+          <GoRepo size={28} style={{ color: "#8b949e" }} />
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold" style={{ color: "#e6edf3" }}>
+              GitHub Projelerim
+            </h2>
+            <p className="text-sm" style={{ color: "#8b949e" }}>
+              <span style={{ color: "#58a6ff" }}>{username}</span> hesabımdaki güncel repolar
+            </p>
+          </div>
+        </div>
 
         {loading && (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="card animate-pulse">
-                <div className="h-5 bg-gray-300 dark:bg-gray-700 rounded w-3/4 mb-3" />
-                <div className="h-3 bg-gray-200 dark:bg-gray-800 rounded w-full mb-2" />
-                <div className="h-3 bg-gray-200 dark:bg-gray-800 rounded w-2/3 mb-4" />
-                <div className="flex gap-4">
-                  <div className="h-4 bg-gray-200 dark:bg-gray-800 rounded w-12" />
-                  <div className="h-4 bg-gray-200 dark:bg-gray-800 rounded w-12" />
-                </div>
+              <div key={i} className="animate-pulse rounded-md border" style={{ borderColor: "#21262d", background: "#161b22", padding: "16px" }}>
+                <div className="h-4 rounded w-3/4 mb-3" style={{ background: "#21262d" }} />
+                <div className="h-3 rounded w-full mb-2" style={{ background: "#21262d" }} />
+                <div className="h-3 rounded w-1/2" style={{ background: "#21262d" }} />
               </div>
             ))}
           </div>
         )}
 
         {error && (
-          <div className="text-center py-12">
-            <p className="text-gray-500 dark:text-gray-400">GitHub projeleri yüklenirken bir hata oluştu.</p>
+          <div className="text-center py-12" style={{ color: "#8b949e" }}>
+            <p>GitHub projeleri yüklenirken bir hata oluştu.</p>
           </div>
         )}
 
         {!loading && !error && (
-          <motion.div
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
-          >
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {repos.map((repo, i) => (
               <motion.a
                 key={repo.id}
                 href={repo.html_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                variants={{
-                  hidden: { opacity: 0, y: 30 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: i * 0.06 }}
+                className="block rounded-md border p-4 transition-all duration-200"
+                style={{
+                  borderColor: "#21262d",
+                  background: "#161b22",
                 }}
-                whileHover={{ y: -4 }}
-                className="card group block"
+                whileHover={{ y: -2, borderColor: "#30363d" }}
               >
-                <div className="flex items-start gap-3 mb-3">
-                  <div className="p-2 rounded-lg bg-accent/10 text-accent group-hover:bg-accent/20 transition-all">
-                    <HiCode size={18} />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="font-semibold text-black dark:text-white truncate group-hover:text-accent transition-colors">
-                      {repo.name}
-                    </h3>
-                    {repo.description && (
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-2">
-                        {repo.description}
-                      </p>
-                    )}
-                  </div>
+                <div className="flex items-center gap-2 mb-3">
+                  <GoRepo size={16} style={{ color: "#8b949e", flexShrink: 0 }} />
+                  <span
+                    className="font-semibold truncate text-sm"
+                    style={{ color: "#58a6ff", fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" }}
+                  >
+                    {repo.name}
+                  </span>
                 </div>
 
-                <div className="flex items-center gap-4 text-xs text-gray-400 dark:text-gray-500">
+                {repo.description && (
+                  <p className="text-xs mb-3 line-clamp-2" style={{ color: "#8b949e" }}>
+                    {repo.description}
+                  </p>
+                )}
+
+                <div className="flex items-center gap-4 text-xs" style={{ color: "#8b949e" }}>
                   {repo.language && (
                     <span className="flex items-center gap-1">
-                      <span className="w-2.5 h-2.5 rounded-full bg-accent" />
+                      <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#2da44e" }} />
                       {repo.language}
                     </span>
                   )}
@@ -111,13 +108,12 @@ export default function GitHubRepos({ username }) {
                     <GoRepoForked size={14} />
                     {repo.forks_count}
                   </span>
-                  <HiExternalLink size={14} className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
               </motion.a>
             ))}
-          </motion.div>
+          </div>
         )}
       </div>
-    </AnimatedSection>
+    </section>
   )
 }
