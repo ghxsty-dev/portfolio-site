@@ -61,7 +61,7 @@ export default function Hero({ profile }) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 + 0.5, duration: 0.3 }}
-                className="inline-block hover:text-accent transition-colors"
+                className="inline-block hover:text-[#e11d48] transition-colors duration-300 cursor-default"
               >
                 {char === " " ? "\u00A0" : char}
               </motion.span>
