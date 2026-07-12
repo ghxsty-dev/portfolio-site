@@ -11,34 +11,30 @@ function ContributionsGraph({ username }) {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
 
+  const currentYear = new Date().getFullYear()
+
   useEffect(() => {
     if (!username) return
-    fetch(`https://github-contributions-api.deno.dev/${username}`)
+    fetch(`https://github-contributions-api.deno.dev/${username}.json?from=${currentYear}-01-01`)
       .then((r) => { if (!r.ok) throw new Error(); return r.json() })
       .then((d) => { setData(d); setLoading(false) })
-      .catch(() => setLoading(false))
+      .catch(() => { setLoading(false) })
   }, [username])
 
   const weeks = useMemo(() => {
-    if (!data) return []
-    const result = []
-    let week = []
-    const first = new Date(data.contributions[0]?.date)
-    const startDay = first.getDay()
-    for (let i = 0; i < startDay; i++) week.push(null)
-    for (const c of data.contributions) {
-      week.push(c)
-      if (week.length === 7) { result.push(week); week = [] }
-    }
-    if (week.length > 0) {
-      while (week.length < 7) week.push(null)
-      result.push(week)
-    }
-    return result
+    if (!data?.contributions) return []
+    return data.contributions.map((week) =>
+      week.map((d) => ({ count: d.contributionCount, level: d.contributionLevel === "NONE" ? 0 : d.contributionLevel === "FIRST_QUARTILE" ? 1 : d.contributionLevel === "SECOND_QUARTILE" ? 2 : d.contributionLevel === "THIRD_QUARTILE" ? 3 : 4, date: d.date }))
+    )
   }, [data])
 
+  const totalContributions = useMemo(() => {
+    if (!weeks.length) return 0
+    return weeks.flat().reduce((sum, d) => sum + d.count, 0)
+  }, [weeks])
+
   const monthLabels = useMemo(() => {
-    if (!data) return []
+    if (!weeks.length) return []
     const labels = []
     let lastMonth = -1
     weeks.forEach((week, wi) => {
@@ -52,7 +48,7 @@ function ContributionsGraph({ username }) {
       }
     })
     return labels
-  }, [weeks, data])
+  }, [weeks])
 
   if (!username) return null
   if (loading) {
@@ -77,9 +73,9 @@ function ContributionsGraph({ username }) {
       {/* Header */}
       <div className="flex items-center gap-2 mb-4">
         <span className="text-sm font-semibold" style={{ color: "#e6edf3" }}>
-          {data?.totalContributions?.toLocaleString() ?? 0}
+          {totalContributions.toLocaleString()}
         </span>
-        <span className="text-sm" style={{ color: "#8b949e" }}>contributions in the last year</span>
+        <span className="text-sm" style={{ color: "#8b949e" }}>contributions in {currentYear}</span>
       </div>
 
       {/* Graph container */}
