@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "TechCorp",
+    "role": "Senior Frontend Developer",
+    "period": "2023 - Present",
+    "description": "Modern web uygulamaları geliştirme, performans optimizasyonu ve takım liderliği.",
+    "website": "https://example.com/techcorp"
+  },
+  {
+    "id": 2,
+    "name": "WebStudio",
+    "role": "Full Stack Developer",
+    "period": "2021 - 2023",
+    "description": "Müşteri odaklı web projeleri geliştirme, API tasarımı ve bakım süreçleri.",
+    "website": "https://example.com/webstudio"
+  },
+  {
+    "id": 3,
+    "name": "Digital Agency",
+    "role": "Junior Developer",
+    "period": "2020 - 2021",
+    "description": "Frontend geliştirme, responsive tasarım ve WordPress yönetimi.",
+    "website": "https://example.com/digitalagency"
+  }
+]

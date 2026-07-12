@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "title": "SkyBlue Tasarım Hizmetleri",
+    "description": "Kurumsal tasarım, UI/UX tasarım ve web geliştirme hizmetleri sunan bir platform.",
+    "image": "/images/projects/ecommerce.jpg",
+    "tags": ["Next.js", "Stripe", "Tailwind", "PostgreSQL"],
+    "link": "https://example.com/ecommerce",
+    "github": "https://github.com/ghxsty/ecommerce",
+    "featured": true
+  }
+]

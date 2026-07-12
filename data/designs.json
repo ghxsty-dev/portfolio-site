@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "Kurumsal Kimlik Tasarımı",
+    "description": "Bir teknoloji şirketi için kurumsal kimlik ve logo tasarımı.",
+    "image": "/images/designs/design1.jpg",
+    "tags": ["Logo", "Kurumsal"],
+    "link": null
+  },
+  {
+    "id": 2,
+    "title": "UI/UX Mobil Uygulama",
+    "description": "SaaS ürünü için mobil uygulama arayüz tasarımı.",
+    "image": "/images/designs/design2.jpg",
+    "tags": ["UI/UX", "Mobil"],
+    "link": null
+  },
+  {
+    "id": 3,
+    "title": "Web Site Tasarımı",
+    "description": "Modern bir e-ticaret sitesi için web arayüz tasarımı.",
+    "image": "/images/designs/design3.jpg",
+    "tags": ["Web", "UI/UX"],
+    "link": null
+  }
+]

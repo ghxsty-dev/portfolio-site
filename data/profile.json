@@ -1,0 +1,19 @@
+{
+  "name": "Ghxsty",
+  "title": "Full Stack Developer",
+  "bio": "Yarı profesyonel tasarımcıyım. Kurumsal tasarım, UI/UX tasarım ve D.js, JavaScript konularında uzmanım.",
+  "about": {
+    "description": "",
+    "skills": [
+      "Kurumsal Tasarım",
+      "UI/UX Tasarım",
+      "D.js | JavaScript"
+    ]
+  },
+  "social": {
+    "email": "kivancghxsty@gmail.com",
+    "discord": "ghxsty.lol",
+    "github": "https://github.com/ghxsty-dev",
+    "instagram": "https://instagram.com/kivancsirins"
+  }
+}
