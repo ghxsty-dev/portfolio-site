@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react"
+import { useState, useRef, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
 const fastfetch = [
@@ -26,8 +26,6 @@ export default function Linux() {
   const [phase, setPhase] = useState("idle")
   const [cmd, setCmd] = useState("")
   const [lines, setLines] = useState(0)
-  const [cursorPos, setCursorPos] = useState({ fromX: 0, fromY: 0, toX: 0, toY: 0 })
-  const sectionRef = useRef(null)
   const timerRef = useRef(null)
 
   const clearTimers = useCallback(() => {
@@ -37,39 +35,25 @@ export default function Linux() {
 
   const start = useCallback(() => {
     if (phase !== "idle") return
-    const rect = sectionRef.current?.getBoundingClientRect()
-    if (!rect) return
+    setPhase("typing")
 
-    const fromX = rect.right - 50
-    const fromY = rect.bottom - 70
-    const toX = rect.left + rect.width * 0.3
-    const toY = rect.bottom - 50
-
-    setCursorPos({ fromX, fromY, toX, toY })
-    setPhase("cursor")
-
-    const t1 = setTimeout(() => {
-      setPhase("typing")
-      let i = 0
-      const t = setInterval(() => {
-        i++
-        setCmd("fastfetch".slice(0, i))
-        if (i >= 9) {
-          clearInterval(t)
-          setTimeout(() => {
-            setPhase("output")
-            let li = 0
-            const lt = setInterval(() => {
-              li++
-              setLines(li)
-              if (li >= fastfetch.length) clearInterval(lt)
-            }, 40)
-          }, 400)
-        }
-      }, 80)
-    }, 1400)
-
-    timerRef.current = [t1]
+    let i = 0
+    const t = setInterval(() => {
+      i++
+      setCmd("fastfetch".slice(0, i))
+      if (i >= 9) {
+        clearInterval(t)
+        setTimeout(() => {
+          setPhase("output")
+          let li = 0
+          const lt = setInterval(() => {
+            li++
+            setLines(li)
+            if (li >= fastfetch.length) clearInterval(lt)
+          }, 40)
+        }, 400)
+      }
+    }, 80)
   }, [phase])
 
   const reset = useCallback(() => {
@@ -81,7 +65,6 @@ export default function Linux() {
 
   return (
     <section
-      ref={sectionRef}
       id="linux"
       className="relative overflow-hidden select-none"
       style={{
@@ -151,33 +134,6 @@ export default function Linux() {
           </div>
         </motion.div>
       </div>
-
-      {/* Mouse Cursor */}
-      <AnimatePresence>
-        {phase === "cursor" && (
-          <motion.div
-            key="cursor"
-            className="fixed z-50 pointer-events-none"
-            initial={{ left: cursorPos.fromX, top: cursorPos.fromY, opacity: 1, scale: 1 }}
-            animate={[
-              { left: cursorPos.toX, top: cursorPos.toY, transition: { duration: 1.2, ease: "easeInOut" } },
-              { scale: [1, 0.85, 1], transition: { duration: 0.3, delay: 0 } },
-            ]}
-            exit={{ opacity: 0 }}
-          >
-            <svg width="22" height="30" viewBox="0 0 22 30" fill="none">
-              <path d="M2 2L4 27L9 20L14 27L17 25L12 18L19 16L2 2Z" fill="white" stroke="black" strokeWidth="1.5" strokeLinejoin="round" />
-            </svg>
-            <motion.div
-              initial={{ scale: 0.5, opacity: 0.7 }}
-              animate={{ scale: 3, opacity: 0 }}
-              transition={{ duration: 0.6 }}
-              className="absolute rounded-full"
-              style={{ top: 13, left: 7, width: 10, height: 10, border: "2px solid rgba(255,255,255,0.7)" }}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* KDE Panel */}
       <div className="absolute bottom-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-1.5" style={{ background: "rgba(30,30,46,0.85)", backdropFilter: "blur(20px)", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
