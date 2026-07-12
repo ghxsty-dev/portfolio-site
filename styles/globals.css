@@ -2,84 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;700&display=swap');
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 @layer base {
   body {
     @apply bg-white dark:bg-black text-gray-800 dark:text-gray-300 transition-colors duration-300;
     font-family: 'Inter', system-ui, sans-serif;
   }
-
-  ::selection {
-    @apply bg-accent/20 text-accent;
-  }
+  ::selection { @apply bg-accent/20 text-accent; }
 }
 
 @layer components {
   .section-container {
     @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
   }
-
   .section-title {
     @apply text-3xl sm:text-4xl font-bold text-black dark:text-white;
   }
-
   .section-subtitle {
     @apply text-gray-500 dark:text-gray-400 mt-2;
   }
-
   .card {
     @apply bg-gray-100 dark:bg-[#111] border border-gray-300 dark:border-gray-800 rounded-xl p-6 transition-all duration-300;
   }
-
   .card:hover {
     @apply border-accent/50 shadow-lg shadow-accent/10 dark:shadow-accent/5;
   }
-
   .btn-primary {
     @apply inline-flex items-center gap-2 px-6 py-3 bg-accent text-white rounded-lg font-medium 
-           hover:bg-accent-hover transition-all duration-300 shadow-lg shadow-accent/20
+           hover:bg-accent-hover shadow-lg shadow-accent/20
            focus:outline-none focus:ring-2 focus:ring-accent/50;
   }
-
   .btn-outline {
     @apply inline-flex items-center gap-2 px-6 py-3 border border-gray-400 dark:border-gray-600 
            text-gray-700 dark:text-gray-300 rounded-lg font-medium 
-           hover:border-accent hover:text-accent transition-all duration-300
+           hover:border-accent hover:text-accent
            focus:outline-none focus:ring-2 focus:ring-accent/50;
   }
-
   .tag {
     @apply px-3 py-1 text-xs font-medium rounded-full 
            bg-accent/10 text-accent border border-accent/20;
   }
-
-  .jp-text {
-    font-family: 'Noto Sans JP', sans-serif;
-    @apply tracking-wider;
-  }
-
   .glow-line {
     @apply h-1 w-20 bg-accent rounded-full mx-auto;
   }
 }
 
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-black;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-gray-400 dark:bg-gray-700 rounded-full;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-600 dark:bg-gray-500;
-}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { @apply bg-gray-100 dark:bg-black; }
+::-webkit-scrollbar-thumb { @apply bg-gray-400 dark:bg-gray-700 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-gray-600 dark:bg-gray-500; }
