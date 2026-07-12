@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero"
 import About from "@/components/About"
 import SkyBlue from "@/components/SkyBlue"
+import Linux from "@/components/Linux"
 import GitHubRepos from "@/components/GitHubRepos"
 import Contact from "@/components/Contact"
 
@@ -13,6 +14,7 @@ export default function Home() {
       <Hero profile={profile} />
       <About profile={profile} designs={designs} />
       <SkyBlue />
+      <Linux />
       <GitHubRepos username="ghxsty-dev" />
       <Contact profile={profile} />
     </>
