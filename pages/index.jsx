@@ -3,7 +3,6 @@ import About from "@/components/About"
 import SkyBlue from "@/components/SkyBlue"
 import Linux from "@/components/Linux"
 import GitHubRepos from "@/components/GitHubRepos"
-import MyAnimeList from "@/components/MyAnimeList"
 import Contact from "@/components/Contact"
 
 import profile from "@/data/profile.json"
@@ -17,7 +16,6 @@ export default function Home() {
       <SkyBlue />
       <Linux />
       <GitHubRepos username="ghxsty-dev" />
-      <MyAnimeList username="ghxxxsty" />
       <Contact profile={profile} />
     </>
   )
