@@ -9,8 +9,8 @@
   },
   {
     "id": 2,
-    "title": "UI/UX Mobil Uygulama",
-    "description": "SaaS ürünü için mobil uygulama arayüz tasarımı.",
+    "title": "Mangitto Instagram Tasarım",
+    "description": "Mangitto Sosyal Medya için Tasarım.",
     "image": "/images/designs/design2.png",
     "tags": ["Sosyal Medya", "Tasarım"],
     "link": null
@@ -28,6 +28,22 @@
     "title": "Velo Hosting Kurumsal Tasarım",
     "description": "Velo Hosting için kurumsal tasarım.",
     "image": "/images/designs/design4.png",
+    "tags": ["Kurumsal", "Tasarım"],
+    "link": null
+  },
+  {
+    "id": 5,
+    "title": "Mangitto Sosyal Medya",
+    "description": "Mangitto için Sosyal Medya Tasarımı.",
+    "image": "/images/designs/design5.png",
+    "tags": ["Kurumsal", "Tasarım"],
+    "link": null
+  },
+  {
+    "id": 6,
+    "title": "Growex MC Banner Tasarımı",
+    "description": "Growex MC için Banner Tasarımı.",
+    "image": "/images/designs/design6.png",
     "tags": ["Kurumsal", "Tasarım"],
     "link": null
   }
