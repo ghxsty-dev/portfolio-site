@@ -17,7 +17,7 @@ export default function Projects({ projects }) {
           side="right"
         />
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="flex flex-wrap justify-center gap-6">
           {displayed.map((project, i) => (
             <ProjectCard key={project.id} project={project} index={i} />
           ))}
