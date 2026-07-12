@@ -87,9 +87,9 @@ export default function Hero({ profile }) {
 
           <motion.div variants={itemVariants} className="flex gap-4 mt-8">
             <motion.a
-              href="#projects"
+              href="#github"
               className="btn-primary"
-              onClick={(e) => { e.preventDefault(); document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" }) }}
+              onClick={(e) => { e.preventDefault(); document.getElementById("github")?.scrollIntoView({ behavior: "smooth" }) }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
