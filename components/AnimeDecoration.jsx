@@ -3,13 +3,15 @@ import { useMemo } from "react"
 
 export function FloatingParticles() {
   const particles = useMemo(() =>
-    Array.from({ length: 20 }, (_, i) => ({
+    Array.from({ length: 30 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 5 + 2,
-      delay: Math.random() * 5,
-      duration: Math.random() * 4 + 4,
+      size: Math.random() * 6 + 2,
+      delay: Math.random() * 8,
+      duration: Math.random() * 5 + 5,
+      driftX: (Math.random() - 0.5) * 60,
+      color: i % 3 === 0 ? "accent" : i % 3 === 1 ? "white" : "accent",
     })), []
   )
 
@@ -18,17 +20,14 @@ export function FloatingParticles() {
       {particles.map((p) => (
         <motion.div
           key={p.id}
-          className="absolute rounded-full"
-          style={{
-            width: p.size,
-            height: p.size,
-            left: `${p.x}%`,
-            top: `${p.y}%`,
-          }}
+          className="absolute"
+          style={{ left: `${p.x}%`, top: `${p.y}%` }}
           animate={{
-            y: [0, -40, 0],
-            opacity: [0, 0.6, 0],
-            scale: [0, 1.5, 0],
+            y: [0, -60, 0],
+            x: [0, p.driftX, 0],
+            opacity: [0, 0.5, 0],
+            scale: [0, 1.8, 0],
+            rotate: [0, 180, 360],
           }}
           transition={{
             duration: p.duration,
@@ -37,7 +36,10 @@ export function FloatingParticles() {
             ease: "easeInOut",
           }}
         >
-          <div className="w-full h-full rounded-full bg-accent shadow-[0_0_6px_2px_rgba(225,29,72,0.5)]" />
+          <div
+            className={`w-${p.size} h-${p.size} rounded-full ${p.color === "accent" ? "bg-accent shadow-[0_0_8px_3px_rgba(225,29,72,0.4)]" : "bg-white dark:bg-white/30 shadow-[0_0_6px_2px_rgba(255,255,255,0.2)]"}`}
+            style={{ width: p.size, height: p.size }}
+          />
         </motion.div>
       ))}
     </div>
@@ -64,13 +66,19 @@ export function JapanesePattern() {
 export function AnimeSilhouette() {
   return (
     <motion.div
-      initial={{ opacity: 0, x: 50 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+      initial={{ opacity: 0, x: 80, rotate: 5 }}
+      animate={{ opacity: 1, x: 0, rotate: 0 }}
+      transition={{ duration: 1.2, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
       className="hidden lg:block absolute right-0 bottom-0 w-[460px] h-[570px] select-none z-[5]"
     >
       <div className="relative w-full h-full">
-        <div className="absolute inset-0 bg-gradient-to-t from-accent/20 via-transparent to-transparent rounded-full blur-3xl" />
+        <motion.div
+          animate={{
+            boxShadow: ["0 0 30px rgba(225,29,72,0.3)", "0 0 60px rgba(225,29,72,0.5)", "0 0 30px rgba(225,29,72,0.3)"],
+          }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute inset-0 bg-gradient-to-t from-accent/20 via-transparent to-transparent rounded-full blur-3xl"
+        />
         <div className="relative w-full h-full">
           <img
             src="/images/anime-character.png"
@@ -86,12 +94,13 @@ export function AnimeSilhouette() {
 
 export function SakuraPetals() {
   const petals = useMemo(() =>
-    Array.from({ length: 8 }, (_, i) => ({
+    Array.from({ length: 10 }, (_, i) => ({
       id: i,
       left: Math.random() * 100,
-      delay: Math.random() * 6,
-      size: Math.random() * 12 + 6,
-      duration: Math.random() * 6 + 8,
+      delay: Math.random() * 8,
+      size: Math.random() * 14 + 6,
+      duration: Math.random() * 8 + 10,
+      sway: (Math.random() - 0.5) * 120,
     })), []
   )
 
@@ -103,10 +112,10 @@ export function SakuraPetals() {
           className="absolute"
           style={{ left: `${p.left}%`, top: -30 }}
           animate={{
-            y: [0, 800],
-            x: [0, Math.random() * 80 - 40],
-            rotate: [0, 720],
-            opacity: [0, 0.5, 0],
+            y: [0, 900],
+            x: [0, p.sway, p.sway / 2, -p.sway / 2, 0],
+            rotate: [0, 360, 720, 1080],
+            opacity: [0, 0.6, 0.4, 0],
           }}
           transition={{
             duration: p.duration,
@@ -125,5 +134,16 @@ export function SakuraPetals() {
         </motion.div>
       ))}
     </div>
+  )
+}
+
+export function ScrollProgress() {
+  return (
+    <motion.div
+      className="fixed top-0 left-0 right-0 h-[3px] bg-accent z-[100] origin-left"
+      style={{ scaleX: 0 }}
+      animate={{ scaleX: 1 }}
+      transition={{ duration: 0.1 }}
+    />
   )
 }

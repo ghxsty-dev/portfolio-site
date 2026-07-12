@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { HiArrowDown } from "react-icons/hi"
 import { AnimeSilhouette, FloatingParticles, SakuraPetals } from "./AnimeDecoration"
@@ -6,16 +7,29 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+    transition: { staggerChildren: 0.12, delayChildren: 0.2 },
   },
 }
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 40, rotateX: -15 },
+  visible: {
+    opacity: 1, y: 0, rotateX: 0,
+    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
 }
 
 export default function Hero({ profile }) {
+  const [titleIndex, setTitleIndex] = useState(0)
+  const titles = ["Full Stack Developer", "UI/UX Designer", "Creative Developer"]
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTitleIndex((prev) => (prev + 1) % titles.length)
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <section id="hero" className="min-h-screen flex items-center relative overflow-hidden bg-white dark:bg-black">
       <FloatingParticles />
@@ -41,33 +55,56 @@ export default function Hero({ profile }) {
             variants={itemVariants}
             className="text-5xl sm:text-6xl lg:text-7xl font-bold text-black dark:text-white mb-4"
           >
-            {profile.name}
+            {profile.name.split("").map((char, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05 + 0.5, duration: 0.3 }}
+                className="inline-block hover:text-accent transition-colors"
+              >
+                {char === " " ? "\u00A0" : char}
+              </motion.span>
+            ))}
           </motion.h1>
 
-          <motion.h2 variants={itemVariants} className="text-2xl sm:text-3xl lg:text-4xl font-bold text-accent mb-6">
-            {profile.title}
-          </motion.h2>
+          <motion.div variants={itemVariants} className="h-10 mb-6">
+            <motion.h2
+              key={titleIndex}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+              className="text-2xl sm:text-3xl lg:text-4xl font-bold text-accent"
+            >
+              {titles[titleIndex]}
+            </motion.h2>
+          </motion.div>
 
           <motion.p variants={itemVariants} className="text-lg text-gray-500 dark:text-gray-400 max-w-xl leading-relaxed">
             {profile.bio}
           </motion.p>
 
           <motion.div variants={itemVariants} className="flex gap-4 mt-8">
-            <a
+            <motion.a
               href="#projects"
               className="btn-primary"
               onClick={(e) => { e.preventDefault(); document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" }) }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               Projelerimi Gör
-            </a>
-            <a
+            </motion.a>
+            <motion.a
               href="https://discord.gg/CGmxFdwfCV"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-outline"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               İletişime Geç
-            </a>
+            </motion.a>
           </motion.div>
         </motion.div>
       </div>
@@ -78,9 +115,9 @@ export default function Hero({ profile }) {
         href="#about"
         onClick={(e) => { e.preventDefault(); document.getElementById("about")?.scrollIntoView({ behavior: "smooth" }) }}
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-gray-400 dark:text-gray-600 hover:text-accent transition-colors animate-bounce"
+        animate={{ opacity: 1, y: [0, 8, 0] }}
+        transition={{ opacity: { delay: 1.5 }, y: { duration: 2, repeat: Infinity, ease: "easeInOut" } }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-gray-400 dark:text-gray-600 hover:text-accent transition-colors"
       >
         <HiArrowDown size={24} />
       </motion.a>
