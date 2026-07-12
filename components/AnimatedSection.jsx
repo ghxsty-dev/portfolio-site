@@ -1,10 +1,20 @@
 import { motion } from "framer-motion"
 import { useInView } from "framer-motion"
 import { useRef } from "react"
+import { useAnimations } from "@/context/AnimationContext"
 
 export default function AnimatedSection({ children, className = "", delay = 0, ...props }) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-80px" })
+  const { animationsEnabled } = useAnimations()
+
+  if (!animationsEnabled) {
+    return (
+      <section className={className} {...props}>
+        {children}
+      </section>
+    )
+  }
 
   return (
     <motion.section

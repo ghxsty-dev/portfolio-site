@@ -46,5 +46,45 @@
     "image": "/images/designs/design6.png",
     "tags": ["Kurumsal", "Tasarım"],
     "link": null
+  },
+  {
+    "id": 7,
+    "title": "SkyBlue Logo Tasarımı",
+    "description": "SkyBlue için Logo Tasarımı.",
+    "image": "/images/designs/design7.png",
+    "tags": ["Kurumsal", "Tasarım"],
+    "link": null
+  },
+  {
+    "id": 8,
+    "title": "NetSunucum Konu Tasarımları",
+    "description": "NetSunucum için Konu Tasarımları.",
+    "image": "/images/designs/design8.png",
+    "tags": ["Kurumsal", "Tasarım"],
+    "link": null
+  },
+  {
+    "id": 9,
+    "title": "NetSunucum Konu Tasarımları",
+    "description": "NetSunucum için Konu Tasarımları.",
+    "image": "/images/designs/design9.png",
+    "tags": ["Kurumsal", "Tasarım"],
+    "link": null
+  },
+  {
+    "id": 10,
+    "title": "Espor Konu Tasarımı",
+    "description": "Konu Tasarımları.",
+    "image": "/images/designs/design10.png",
+    "tags": ["Sosyal Medya", "Tasarım"],
+    "link": null
+  },
+  {
+    "id": 11,
+    "title": "Minecraft Text Banner Tasarımı",
+    "description": "Minecraft için Text Banner Tasarımı.",
+    "image": "/images/designs/design11.png",
+    "tags": ["Minecraft", "Tasarım"],
+    "link": null
   }
 ]

@@ -1,5 +1,6 @@
 import ThemeToggle from "./ThemeToggle"
 import VisitorCounter from "./VisitorCounter"
+import AnimationToggle from "./AnimationToggle"
 
 export default function Footer() {
   return (
@@ -9,6 +10,7 @@ export default function Footer() {
           <div className="flex items-center gap-3">
             <VisitorCounter />
             <ThemeToggle />
+            <AnimationToggle />
           </div>
           <p className="text-sm text-gray-400 dark:text-gray-500">
             &copy; {new Date().getFullYear()} Ghxsty. Tüm hakları saklıdır.
