@@ -17,11 +17,11 @@ export default function GitHubRepos({ username }) {
   return (
     <section id="github" className="py-24" style={{ background: "#000", borderTop: "1px solid #111" }}>
       <div className="section-container">
-        <p className="text-xs mb-2" style={{ color: "#555" }}>GitHub</p>
-        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8">Projelerim</h2>
+        <p className="text-xs mb-2 text-center" style={{ color: "#555" }}>GitHub</p>
+        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8 text-center">Projelerim</h2>
 
         {loading ? (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
             {[1, 2, 3].map(i => (
               <div key={i} className="animate-pulse p-4 rounded-lg" style={{ background: "#0a0a0a", border: "1px solid #1a1a1a" }}>
                 <div className="h-4 rounded w-3/4 mb-3" style={{ background: "#1a1a1a" }} />
@@ -30,7 +30,7 @@ export default function GitHubRepos({ username }) {
             ))}
           </div>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
             {repos.map((repo) => (
               <a key={repo.id} href={repo.html_url} target="_blank" rel="noopener noreferrer"
                 className="block p-4 rounded-lg transition-all duration-200"

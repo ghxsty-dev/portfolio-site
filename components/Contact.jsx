@@ -12,8 +12,8 @@ export default function Contact({ profile }) {
   return (
     <section className="py-24" style={{ background: "#000", borderTop: "1px solid #111" }}>
       <div className="section-container">
-        <p className="text-xs mb-2" style={{ color: "#555" }}>İletişim</p>
-        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8">Contact</h2>
+        <p className="text-xs mb-2 text-center" style={{ color: "#555" }}>İletişim</p>
+        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8 text-center">Contact</h2>
 
         <div className="max-w-lg mx-auto space-y-3">
           {socialLinks.map((link) => {
