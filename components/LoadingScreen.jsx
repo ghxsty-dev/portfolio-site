@@ -10,29 +10,7 @@ export default function LoadingScreen({ children }) {
 
   return (
     <>
-      {show && (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 9999,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "#000",
-          }}
-        >
-          <img
-            src="/images/downloading.jpg"
-            alt=""
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
-          />
-        </div>
-      )}
+      {show && <div style={{ position: "fixed", inset: 0, zIndex: 9999, background: "#000" }} />}
       {children}
     </>
   )
