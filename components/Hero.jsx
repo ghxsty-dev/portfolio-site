@@ -1,36 +1,16 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 
-const POND_COUNT = 60
-
-const shapes = [
-  { type: "dot", render: (s) => `<circle cx="${s.x}" cy="${s.y}" r="1.5" fill="rgba(255,255,255,${s.o})"/>` },
-  { type: "cross", render: (s) => `<path d="M${s.x-3} ${s.y-3}L${s.x+3} ${s.y+3}M${s.x+3} ${s.y-3}L${s.x-3} ${s.y+3}" stroke="rgba(255,255,255,${s.o})" stroke-width="1"/>` },
-  { type: "line", render: (s) => `<line x1="${s.x-5}" y1="${s.y}" x2="${s.x+5}" y2="${s.y}" stroke="rgba(255,255,255,${s.o})" stroke-width="0.8"/>` },
-  { type: "dash", render: (s) => `<line x1="${s.x-4}" y1="${s.y}" x2="${s.x+4}" y2="${s.y}" stroke="rgba(255,255,255,${s.o})" stroke-width="1" stroke-dasharray="2 1"/>` },
-]
-
-function generatePond(w, h) {
-  const items = []
-  for (let i = 0; i < POND_COUNT; i++) {
-    const shape = shapes[i % shapes.length]
-    items.push({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      ox: (Math.random() - 0.5) * 20,
-      oy: (Math.random() - 0.5) * 20,
-      o: 0.04 + Math.random() * 0.06,
-      render: shape.render,
-    })
-  }
-  return items
-}
+const ROWS = 28
+const COLS = 80
+const DOT_SIZE = 1.2
 
 export default function Hero({ profile }) {
   const [titleIndex, setTitleIndex] = useState(0)
-  const [pond, setPond] = useState([])
-  const [mouse, setMouse] = useState({ x: 0, y: 0 })
-  const sectionRef = useRef(null)
   const titles = ["Full Stack Developer", "UI/UX Designer", "Creative Developer"]
+  const canvasRef = useRef(null)
+  const mouseRef = useRef({ x: 0, y: 0 })
+  const frameRef = useRef(null)
+  const timeRef = useRef(0)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -40,43 +20,86 @@ export default function Hero({ profile }) {
   }, [])
 
   useEffect(() => {
-    if (!sectionRef.current) return
-    const { width, height } = sectionRef.current.getBoundingClientRect()
-    setPond(generatePond(width, height))
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext("2d")
+    let w, h
+
+    function resize() {
+      w = canvas.width = window.innerWidth
+      h = canvas.height = window.innerHeight
+    }
+    resize()
+    window.addEventListener("resize", resize)
+
+    function draw() {
+      timeRef.current += 0.008
+      ctx.clearRect(0, 0, w, h)
+
+      const mx = mouseRef.current.x
+      const my = mouseRef.current.y
+
+      const bandTop = h * 0.52
+      const bandHeight = h * 0.35
+
+      for (let row = 0; row < ROWS; row++) {
+        for (let col = 0; col < COLS; col++) {
+          const baseX = (col / (COLS - 1)) * w
+          const rowNorm = row / (ROWS - 1)
+
+          const waveX = Math.sin(timeRef.current + col * 0.12 + mx * 0.8) * (2 + rowNorm * 2)
+          const waveY = Math.cos(timeRef.current * 0.7 + col * 0.08 + my * 0.5) * (3 + rowNorm * 3)
+
+          let x = baseX + waveX + mx * (3 + rowNorm * 6)
+          let y = bandTop + rowNorm * bandHeight + waveY + my * (2 + rowNorm * 4)
+
+          const centerX = w / 2
+          const distFromCenter = Math.abs(x - centerX) / (w / 2)
+          const edgeFade = Math.max(0, 1 - distFromCenter * distFromCenter)
+
+          const rowFade = Math.sin(rowNorm * Math.PI)
+          const alpha = edgeFade * rowFade * 0.12
+
+          if (alpha < 0.005) continue
+
+          ctx.beginPath()
+          ctx.arc(x, y, DOT_SIZE, 0, Math.PI * 2)
+          ctx.fillStyle = `rgba(255,255,255,${alpha})`
+          ctx.fill()
+        }
+      }
+
+      frameRef.current = requestAnimationFrame(draw)
+    }
+
+    frameRef.current = requestAnimationFrame(draw)
+
+    return () => {
+      cancelAnimationFrame(frameRef.current)
+      window.removeEventListener("resize", resize)
+    }
   }, [])
 
   const handleMouse = useCallback((e) => {
-    const rect = sectionRef.current?.getBoundingClientRect()
-    if (!rect) return
-    setMouse({
-      x: ((e.clientX - rect.left) / rect.width - 0.5) * 2,
-      y: ((e.clientY - rect.top) / rect.height - 0.5) * 2,
-    })
+    const w = window.innerWidth
+    const h = window.innerHeight
+    mouseRef.current = {
+      x: (e.clientX / w - 0.5) * 2,
+      y: (e.clientY / h - 0.5) * 2,
+    }
   }, [])
 
   return (
     <section
-      ref={sectionRef}
       className="min-h-screen flex items-center justify-center relative overflow-hidden"
       style={{ background: "#000" }}
       onMouseMove={handleMouse}
     >
-      {/* Pond SVG */}
-      <svg
+      <canvas
+        ref={canvasRef}
         className="absolute inset-0 w-full h-full pointer-events-none"
         style={{ zIndex: 0 }}
-      >
-        {pond.map((p, i) => (
-          <g
-            key={i}
-            style={{
-              transform: `translate(${p.ox * mouse.x}px, ${p.oy * mouse.y}px)`,
-              transition: "transform 0.15s ease-out",
-            }}
-            dangerouslySetInnerHTML={{ __html: p.render(p) }}
-          />
-        ))}
-      </svg>
+      />
 
       <div className="text-center px-4 relative" style={{ zIndex: 1 }}>
         <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white mb-4 tracking-tight">
@@ -96,4 +119,3 @@ export default function Hero({ profile }) {
     </section>
   )
 }
-
