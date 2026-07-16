@@ -28,33 +28,9 @@ export default function Hero({ profile }) {
           </span>
         </div>
 
-        <p className="text-sm mx-auto mb-10" style={{ color: "#555", maxWidth: "28rem", lineHeight: 1.8 }}>
+        <p className="text-sm mx-auto" style={{ color: "#555", maxWidth: "28rem", lineHeight: 1.8 }}>
           {profile.bio}
         </p>
-
-        <div className="flex items-center justify-center gap-4">
-          <a
-            href="#github"
-            onClick={(e) => { e.preventDefault(); document.getElementById("github")?.scrollIntoView({ behavior: "smooth" }) }}
-            className="px-6 py-3 text-sm font-medium transition-all duration-200"
-            style={{ background: "#fff", color: "#000", borderRadius: "6px" }}
-            onMouseEnter={(e) => e.currentTarget.style.opacity = "0.8"}
-            onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
-          >
-            Projelerimi Gör
-          </a>
-          <a
-            href="https://discord.gg/CGmxFdwfCV"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-6 py-3 text-sm font-medium transition-all duration-200"
-            style={{ border: "1px solid #222", color: "#777", borderRadius: "6px" }}
-            onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#444"; e.currentTarget.style.color = "#aaa" }}
-            onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#222"; e.currentTarget.style.color = "#777" }}
-          >
-            İletişime Geç
-          </a>
-        </div>
       </div>
     </section>
   )
