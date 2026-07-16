@@ -1,8 +1,49 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 
-const ROWS = 28
-const COLS = 80
-const DOT_SIZE = 1.2
+const ROWS = 40
+const COLS = 100
+const CELL = 14
+
+function seededRand(a, b) {
+  let x = Math.sin(a * 127.1 + b * 311.7) * 43758.5453
+  return x - Math.floor(x)
+}
+
+function drawShape(ctx, x, y, type, size, alpha) {
+  ctx.strokeStyle = `rgba(255,255,255,${alpha})`
+  ctx.fillStyle = `rgba(255,255,255,${alpha})`
+  ctx.lineWidth = 0.8
+  const s = size
+  switch (type) {
+    case 0:
+      ctx.beginPath()
+      ctx.arc(x, y, 1.2, 0, Math.PI * 2)
+      ctx.fill()
+      break
+    case 1:
+      ctx.beginPath()
+      ctx.moveTo(x - s, y - s)
+      ctx.lineTo(x + s, y + s)
+      ctx.moveTo(x + s, y - s)
+      ctx.lineTo(x - s, y + s)
+      ctx.stroke()
+      break
+    case 2:
+      ctx.beginPath()
+      ctx.moveTo(x - s, y)
+      ctx.lineTo(x + s, y)
+      ctx.moveTo(x, y - s)
+      ctx.lineTo(x, y + s)
+      ctx.stroke()
+      break
+    case 3:
+      ctx.beginPath()
+      ctx.moveTo(x - s, y)
+      ctx.lineTo(x + s, y)
+      ctx.stroke()
+      break
+  }
+}
 
 export default function Hero({ profile }) {
   const [titleIndex, setTitleIndex] = useState(0)
@@ -11,6 +52,7 @@ export default function Hero({ profile }) {
   const mouseRef = useRef({ x: 0, y: 0 })
   const frameRef = useRef(null)
   const timeRef = useRef(0)
+  const shapeMapRef = useRef(null)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -25,6 +67,16 @@ export default function Hero({ profile }) {
     const ctx = canvas.getContext("2d")
     let w, h
 
+    if (!shapeMapRef.current) {
+      shapeMapRef.current = []
+      for (let r = 0; r < ROWS; r++) {
+        shapeMapRef.current[r] = []
+        for (let c = 0; c < COLS; c++) {
+          shapeMapRef.current[r][c] = Math.floor(seededRand(r, c) * 4)
+        }
+      }
+    }
+
     function resize() {
       w = canvas.width = window.innerWidth
       h = canvas.height = window.innerHeight
@@ -33,39 +85,46 @@ export default function Hero({ profile }) {
     window.addEventListener("resize", resize)
 
     function draw() {
-      timeRef.current += 0.008
+      timeRef.current += 0.006
       ctx.clearRect(0, 0, w, h)
 
       const mx = mouseRef.current.x
       const my = mouseRef.current.y
 
-      const bandTop = h * 0.52
-      const bandHeight = h * 0.35
+      const textCenterY = h * 0.42
+      const bandHalf = h * 0.22
+
+      const gridW = COLS * CELL
+      const gridH = ROWS * CELL
+      const offsetX = (w - gridW) / 2
+      const offsetY = textCenterY - gridH / 2
 
       for (let row = 0; row < ROWS; row++) {
         for (let col = 0; col < COLS; col++) {
-          const baseX = (col / (COLS - 1)) * w
+          const shapeType = shapeMapRef.current[row][col]
+          const baseX = offsetX + col * CELL + CELL / 2
+          const baseY = offsetY + row * CELL + CELL / 2
           const rowNorm = row / (ROWS - 1)
 
-          const waveX = Math.sin(timeRef.current + col * 0.12 + mx * 0.8) * (2 + rowNorm * 2)
-          const waveY = Math.cos(timeRef.current * 0.7 + col * 0.08 + my * 0.5) * (3 + rowNorm * 3)
+          const waveX = Math.sin(timeRef.current + col * 0.1 + mx * 0.6) * (1.5 + rowNorm * 1.5)
+          const waveY = Math.cos(timeRef.current * 0.7 + col * 0.06 + my * 0.4) * (2 + rowNorm * 2)
 
-          let x = baseX + waveX + mx * (3 + rowNorm * 6)
-          let y = bandTop + rowNorm * bandHeight + waveY + my * (2 + rowNorm * 4)
+          let x = baseX + waveX + mx * (2 + rowNorm * 4)
+          let y = baseY + waveY + my * (1.5 + rowNorm * 3)
+
+          const centerY = textCenterY
+          const distY = Math.abs(y - centerY) / bandHalf
+          const vertFade = Math.max(0, 1 - distY * distY)
 
           const centerX = w / 2
-          const distFromCenter = Math.abs(x - centerX) / (w / 2)
-          const edgeFade = Math.max(0, 1 - distFromCenter * distFromCenter)
+          const distX = Math.abs(x - centerX) / (w / 2)
+          const horizFade = Math.max(0, 1 - distX * distX)
 
-          const rowFade = Math.sin(rowNorm * Math.PI)
-          const alpha = edgeFade * rowFade * 0.12
+          const alpha = vertFade * horizFade * 0.18
 
           if (alpha < 0.005) continue
 
-          ctx.beginPath()
-          ctx.arc(x, y, DOT_SIZE, 0, Math.PI * 2)
-          ctx.fillStyle = `rgba(255,255,255,${alpha})`
-          ctx.fill()
+          drawShape(ctx, x, y, shapeType, shapeType === 0 ? 1.2 : 2.5, alpha)
         }
       }
 
