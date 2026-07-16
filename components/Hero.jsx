@@ -14,10 +14,6 @@ export default function Hero({ profile }) {
   return (
     <section className="min-h-screen flex items-center justify-center" style={{ background: "#000" }}>
       <div className="text-center px-4">
-        <p className="text-xs mb-4" style={{ color: "#444", letterSpacing: "2px", textTransform: "uppercase" }}>
-          Merhaba, ben
-        </p>
-
         <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white mb-4 tracking-tight">
           {profile.name}
         </h1>
