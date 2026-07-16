@@ -1,81 +1,47 @@
-import AnimatedSection from "./AnimatedSection"
-import SectionHeader from "./SectionHeader"
 import { HiMail } from "react-icons/hi"
-import { FaDiscord, FaGithub, FaTwitter, FaLinkedinIn, FaInstagram } from "react-icons/fa"
-import { motion } from "framer-motion"
+import { FaDiscord, FaGithub, FaInstagram } from "react-icons/fa"
 
 const socialLinks = [
-  { icon: HiMail, label: "Email", href: "mailto:", key: "email" },
-  { icon: FaDiscord, label: "Discord", href: null, key: "discord" },
-  { icon: FaGithub, label: "GitHub", href: null, key: "github" },
-  { icon: FaTwitter, label: "Twitter", href: null, key: "twitter" },
-  { icon: FaLinkedinIn, label: "LinkedIn", href: null, key: "linkedin" },
-  { icon: FaInstagram, label: "Instagram", href: null, key: "instagram" },
+  { icon: HiMail, label: "Email", key: "email" },
+  { icon: FaDiscord, label: "Discord", key: "discord" },
+  { icon: FaGithub, label: "GitHub", key: "github" },
+  { icon: FaInstagram, label: "Instagram", key: "instagram" },
 ]
-
-const container = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.04 } },
-}
-
-const item = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-}
 
 export default function Contact({ profile }) {
   return (
-    <AnimatedSection id="contact" className="py-24">
+    <section className="py-24" style={{ background: "#000", borderTop: "1px solid #111" }}>
       <div className="section-container">
-        <SectionHeader
-          title="İletişim"
-          subtitle="Benimle iletişime geçmek için aşağıdaki kanalları kullanabilirsiniz"
-          jpText="連絡先"
-          side="right"
-        />
+        <p className="text-xs mb-2" style={{ color: "#555" }}>İletişim</p>
+        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8">Contact</h2>
 
-        <div className="max-w-2xl mx-auto">
-          <motion.div
-            className="grid sm:grid-cols-2 gap-4"
-            variants={container}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            {socialLinks.map((link) => {
-              const value = profile.social[link.key]
-              if (!value) return null
+        <div className="max-w-lg mx-auto space-y-3">
+          {socialLinks.map((link) => {
+            const value = profile.social[link.key]
+            if (!value) return null
+            const href = link.key === "email" ? `mailto:${value}` : value
+            const isExternal = link.key !== "email"
 
-              const href = link.key === "email" ? `mailto:${value}` : link.href ? `${link.href}${value}` : value
-              const isExternal = link.key !== "email" && link.key !== "discord"
-
-              return (
-                <motion.a
-                  key={link.key}
-                  variants={item}
-                  whileHover={{ scale: 1.015 }}
-                  href={href}
-                  target={isExternal ? "_blank" : undefined}
-                  rel={isExternal ? "noopener noreferrer" : undefined}
-                  className="card flex items-center gap-4 group"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-all group-hover:scale-110">
-                    <link.icon className="w-5 h-5 text-accent" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-black dark:text-white">
-                      {link.label}
-                    </p>
-                    <p className="text-xs text-gray-400 dark:text-gray-500 truncate max-w-[200px]">
-                      {value}
-                    </p>
-                  </div>
-                </motion.a>
-              )
-            })}
-          </motion.div>
+            return (
+              <a key={link.key} href={href} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined}
+                className="flex items-center gap-4 px-4 py-3.5 rounded-lg transition-all"
+                style={{ background: "#0a0a0a", border: "1px solid #1a1a1a" }}
+                onMouseEnter={(e) => e.currentTarget.style.borderColor = "#333"}
+                onMouseLeave={(e) => e.currentTarget.style.borderColor = "#1a1a1a"}
+              >
+                <link.icon size={18} style={{ color: "#555" }} />
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm text-white">{link.label}</p>
+                  <p className="text-xs truncate" style={{ color: "#666" }}>{value}</p>
+                </div>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0, opacity: 0.3 }}>
+                  <path d="M5 2L10 7L5 12" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
+            )
+          })}
         </div>
       </div>
-    </AnimatedSection>
+    </section>
   )
 }

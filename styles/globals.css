@@ -2,95 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;700&display=swap');
-
-:root {
-  --color-accent: 26 26 26;
-  --color-accent-hover: 0 0 0;
-  --color-accent-light: 74 74 74;
-}
-
-.dark {
-  --color-accent: 229 229 229;
-  --color-accent-hover: 255 255 255;
-  --color-accent-light: 176 176 176;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 html { scroll-behavior: smooth; }
 
-@layer base {
-  body {
-    @apply bg-white dark:bg-black text-gray-800 dark:text-gray-300 transition-colors duration-300;
-    font-family: 'Inter', system-ui, sans-serif;
-  }
-  ::selection { @apply bg-accent/20 text-accent; }
+body {
+  background: #000;
+  color: #ccc;
+  font-family: 'Inter', system-ui, sans-serif;
 }
 
-@layer components {
-  .section-container {
-    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
-  }
-  .section-title {
-    @apply text-3xl sm:text-4xl font-bold text-black dark:text-white;
-  }
-  .section-subtitle {
-    @apply text-gray-500 dark:text-gray-400 mt-2;
-  }
-  .card {
-    @apply bg-gray-100 dark:bg-[#111] border border-gray-300 dark:border-gray-800 rounded-xl p-6 transition-all duration-300;
-  }
-  .card:hover {
-    @apply border-accent/50 shadow-lg shadow-accent/10 dark:shadow-accent/5;
-  }
-  .btn-primary {
-    @apply inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-200
-           focus:outline-none focus:ring-2 focus:ring-accent/50;
-    background: #1a1a1a;
-    color: #f5f5f5;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-  }
-  .btn-primary:hover {
-    background: #000000;
-    color: #ffffff;
-  }
-  .dark .btn-primary {
-    background: #f5f5f5;
-    color: #1a1a1a;
-    box-shadow: 0 4px 14px rgba(255,255,255,0.08);
-  }
-  .dark .btn-primary:hover {
-    background: #ffffff;
-    color: #000000;
-  }
-  .btn-outline {
-    @apply inline-flex items-center gap-2 px-6 py-3 border rounded-lg font-medium transition-all duration-200
-           focus:outline-none focus:ring-2 focus:ring-accent/50;
-    border-color: #1a1a1a;
-    color: #1a1a1a;
-  }
-  .btn-outline:hover {
-    background: #1a1a1a;
-    color: #f5f5f5;
-  }
-  .dark .btn-outline {
-    border-color: rgba(255,255,255,0.3);
-    color: rgba(255,255,255,0.7);
-  }
-  .dark .btn-outline:hover {
-    background: rgba(255,255,255,0.1);
-    border-color: #ffffff;
-    color: #ffffff;
-  }
-  .tag {
-    @apply px-3 py-1 text-xs font-medium rounded-full 
-           bg-accent/10 text-accent border border-accent/20;
-  }
-  .glow-line {
-    @apply h-1 w-20 bg-accent rounded-full mx-auto;
-  }
+::selection { background: rgba(255,255,255,0.1); color: #fff; }
+
+.section-container {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  .section-container { padding: 0 1.5rem; }
+}
+
+@media (min-width: 1024px) {
+  .section-container { padding: 0 2rem; }
 }
 
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { @apply bg-gray-100 dark:bg-black; }
-::-webkit-scrollbar-thumb { @apply bg-gray-400 dark:bg-gray-700 rounded-full; }
-::-webkit-scrollbar-thumb:hover { @apply bg-gray-600 dark:bg-gray-500; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: #222; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #333; }
