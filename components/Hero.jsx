@@ -1,16 +1,7 @@
-import { useState, useEffect, useRef } from "react"
+import { useEffect, useRef } from "react"
 
 export default function Hero({ profile }) {
-  const [titleIndex, setTitleIndex] = useState(0)
-  const titles = ["Full Stack Developer", "UI/UX Designer", "Creative Developer"]
   const canvasRef = useRef(null)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTitleIndex((prev) => (prev + 1) % titles.length)
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -72,19 +63,9 @@ export default function Hero({ profile }) {
       />
 
       <div className="text-center px-4 relative" style={{ zIndex: 1 }}>
-        <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white mb-4 tracking-tight">
+        <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold text-white tracking-tight">
           {profile.name}
         </h1>
-
-        <div className="h-7 mb-5">
-          <span className="text-lg sm:text-xl" style={{ color: "#999" }}>
-            {titles[titleIndex]}
-          </span>
-        </div>
-
-        <p className="text-sm mx-auto" style={{ color: "#777", maxWidth: "28rem", lineHeight: 1.8 }}>
-          {profile.bio}
-        </p>
       </div>
     </section>
   )
