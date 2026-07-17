@@ -25,8 +25,7 @@ export default function GitHubRepos({ username }) {
             <img
               src="/images/hakkimda.png"
               alt="hakkimda"
-              className="w-full rounded-lg"
-              style={{ border: "1px solid #1a1a1a" }}
+              className="w-full"
             />
           </div>
 
