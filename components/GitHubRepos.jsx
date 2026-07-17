@@ -21,11 +21,12 @@ export default function GitHubRepos({ username }) {
         <h2 className="text-2xl sm:text-3xl font-bold text-white mb-8 text-center">Projelerim</h2>
 
         <div className="flex flex-col lg:flex-row items-start gap-8 max-w-5xl mx-auto">
-          <div className="hidden lg:block flex-shrink-0 w-56">
+          <div className="hidden lg:block flex-shrink-0" style={{ width: "18rem" }}>
             <img
               src="/images/hakkimda.png"
               alt="hakkimda"
               className="w-full"
+              style={{ objectFit: "cover", objectPosition: "center top", aspectRatio: "3/4" }}
             />
           </div>
 
