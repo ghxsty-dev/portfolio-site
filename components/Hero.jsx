@@ -61,8 +61,8 @@ function drawImage(ctx, w, h, time) {
 
       if (r < 0.3) continue
 
-      const light = Math.floor(180 + intensity * 75)
-      const alpha = 0.4 + intensity * 0.5
+      const light = Math.floor(80 + intensity * 100)
+      const alpha = 0.3 + intensity * 0.5
 
       ctx.globalAlpha = alpha
       ctx.fillStyle = `rgb(${light}, ${light}, ${light})`
