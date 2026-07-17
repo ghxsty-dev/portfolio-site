@@ -61,12 +61,11 @@ function drawImage(ctx, w, h, time) {
 
       if (r < 0.3) continue
 
-      const blue = Math.floor(120 + intensity * 135)
-      const g = Math.floor(intensity * 60)
-      const alpha = 0.6 + intensity * 0.4
+      const light = Math.floor(180 + intensity * 75)
+      const alpha = 0.4 + intensity * 0.5
 
       ctx.globalAlpha = alpha
-      ctx.fillStyle = `rgb(0, ${g}, ${blue})`
+      ctx.fillStyle = `rgb(${light}, ${light}, ${light})`
       ctx.beginPath()
       ctx.arc(x, y, r, 0, Math.PI * 2)
       ctx.fill()
