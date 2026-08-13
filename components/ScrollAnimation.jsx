@@ -83,31 +83,111 @@ export default function ScrollAnimation({ children }) {
       </AnimatePresence>
 
       {/* Noktalar */}
-      <div className="fixed right-6 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-50">
-        {sections.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => goTo(i)}
-            className="w-2 h-2 rounded-full transition-all duration-300"
+      <div className="fixed right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col items-end gap-0">
+        {sections.map((_, i) => {
+          const isActive = i === currentSection
+          return (
+            <div key={i} className="flex items-center justify-end h-10 relative group">
+              {/* Tooltip */}
+              <motion.div
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : 10 }}
+                className="absolute right-8 whitespace-nowrap text-xs font-medium pointer-events-none"
+                style={{ color: "#fff" }}
+              >
+                {["Ana Sayfa", "Hakkımda", "Projelerim", "İletişim"][i]}
+              </motion.div>
+
+              {/* Container */}
+              <button
+                onClick={() => goTo(i)}
+                className="relative flex items-center justify-center h-10 w-10 cursor-pointer"
+              >
+                {/* Dış halka - aktifken parlıyor */}
+                <motion.div
+                  animate={{
+                    scale: isActive ? 1 : 0,
+                    opacity: isActive ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="absolute rounded-full"
+                  style={{
+                    width: 28,
+                    height: 28,
+                    background: "radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%)",
+                  }}
+                />
+
+                {/* Pulse halkası */}
+                {isActive && (
+                  <motion.div
+                    animate={{ scale: [1, 2.2], opacity: [0.5, 0] }}
+                    transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
+                    className="absolute rounded-full"
+                    style={{
+                      width: 12,
+                      height: 12,
+                      border: "1px solid rgba(255,255,255,0.4)",
+                    }}
+                  />
+                )}
+
+                {/* Aktif çizgi (pil shape) */}
+                <motion.div
+                  animate={{
+                    width: isActive ? 24 : 6,
+                    height: isActive ? 6 : 6,
+                    borderRadius: isActive ? 999 : 999,
+                  }}
+                  transition={{ duration: 0.5, ease: [0.35, 0, 0.25, 1] }}
+                  style={{
+                    background: isActive
+                      ? "linear-gradient(90deg, #fff 0%, #aaa 100%)"
+                      : "#333",
+                    boxShadow: isActive ? "0 0 12px rgba(255,255,255,0.4)" : "none",
+                  }}
+                />
+              </button>
+            </div>
+          )
+        })}
+
+        {/* Dikey çizgi (progress) */}
+        <div
+          className="absolute top-0 right-[19px] w-[2px] h-full rounded-full overflow-hidden"
+          style={{ background: "#1a1a1a" }}
+        >
+          <motion.div
+            animate={{
+              height: `${((currentSection) / (sections.length - 1)) * 100}%`,
+            }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
             style={{
-              background: i === currentSection ? "#fff" : "#333",
-              transform: i === currentSection ? "scale(1.4)" : "scale(1)",
+              width: "100%",
+              background: "linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 100%)",
             }}
           />
-        ))}
+        </div>
       </div>
 
-      {/* Indikator */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
+      {/* İndikator */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2">
         <motion.div
           animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          style={{ opacity: currentSection < sections.length - 1 ? 0.4 : 0 }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          style={{ opacity: currentSection < sections.length - 1 ? 0.3 : 0 }}
         >
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
             <path d="M4 8L10 14L16 8" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
         </motion.div>
+        <motion.span
+          animate={{ opacity: currentSection < sections.length - 1 ? 0.3 : 0 }}
+          className="text-[10px] tracking-widest uppercase"
+          style={{ color: "#666" }}
+        >
+          Kaydır
+        </motion.span>
       </div>
     </div>
   )
