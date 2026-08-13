@@ -8,13 +8,13 @@ export default function Custom404() {
           404
         </h1>
         <p className="text-lg text-gray-500 mb-8">
-          Aradigin sayfa bulunamadi.
+          Aradığın sayfa bulunamadı.
         </p>
         <Link
           href="/"
           className="inline-block px-6 py-3 border border-gray-700 text-white rounded-lg hover:bg-white hover:text-black transition-colors duration-300"
         >
-          Ana Sayfaya Don
+          Ana Sayfaya Dön
         </Link>
       </div>
     </section>
