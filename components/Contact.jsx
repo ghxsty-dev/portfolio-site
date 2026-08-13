@@ -11,7 +11,7 @@ const socialLinks = [
 
 export default function Contact({ profile }) {
   return (
-    <section className="py-24" style={{ background: "#000", borderTop: "1px solid #111" }}>
+    <section className="min-h-screen flex items-center justify-center py-24" style={{ background: "#000" }}>
       <div className="section-container">
         <AnimatedSection>
           <p className="text-xs mb-2 text-center" style={{ color: "#555" }}>İletişim</p>

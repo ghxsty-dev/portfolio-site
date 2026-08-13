@@ -2,7 +2,7 @@ import AnimatedSection from "./AnimatedSection"
 
 export default function About({ profile }) {
   return (
-    <section className="py-24" style={{ background: "#000", borderTop: "1px solid #111" }}>
+    <section className="min-h-screen flex items-center justify-center py-24" style={{ background: "#000" }}>
       <div className="section-container">
         <AnimatedSection>
           <div className="max-w-3xl mx-auto text-center">
