@@ -88,16 +88,6 @@ export default function ScrollAnimation({ children }) {
           const isActive = i === currentSection
           return (
             <div key={i} className="flex items-center justify-end h-10 relative group">
-              {/* Tooltip */}
-              <motion.div
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : 10 }}
-                className="absolute right-8 whitespace-nowrap text-xs font-medium pointer-events-none"
-                style={{ color: "#fff" }}
-              >
-                {["Ana Sayfa", "Hakkımda", "Projelerim", "İletişim"][i]}
-              </motion.div>
-
               {/* Container */}
               <button
                 onClick={() => goTo(i)}
