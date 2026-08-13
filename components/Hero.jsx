@@ -17,8 +17,8 @@ export default function Hero({ profile }) {
       />
 
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.2 }}
         className="text-center px-4 relative"
         style={{ zIndex: 1 }}
